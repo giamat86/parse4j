@@ -5,7 +5,8 @@ Parse4J - Java Library for [Parse](https://parse.com)
 
 Ths library is a non-official java library, but it works according to Parse's REST api specification.
 
-ps.: most of the following code snippets and text have been extracted from the parse website, since the java library mimicks the android library. I am not a Parse/Facebook employee.
+This is a fork of Thiagolocatelli Parse4j (https://github.com/thiagolocatelli/parse4j). 
+
 
 Summary
 -------
