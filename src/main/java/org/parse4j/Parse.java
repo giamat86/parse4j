@@ -55,6 +55,22 @@ public class Parse {
 		mMasterKey = masterKey;
 		isRootMode = true;
 	}
+	
+	/**
+	 * Don't use it in client app! Use it only if know what you are doing.
+	 * If someone get your master key he can bypass all of your app's security!
+	 *
+	 * @param applicationId your app id
+	 * @param masterKey your master key
+	 * @param serverPath url of the ParseServer 
+	 */
+	static public void initializeAsRoot (String applicationId, String masterKey, String serverPath) {
+		mApplicationId = applicationId;
+		mMasterKey = masterKey;
+		isRootMode = true;
+		sServerPath = serverPath;
+		bCustomServer = true;
+	}
 
 	static public String getApplicationId() {
 		return mApplicationId;
