@@ -25,8 +25,21 @@ On Parse, you create an App for each of your applications. Each App has its own 
 Since Parse.com servers are shutting down in January 2017, an alternate initialization method is needed for custom server URIs.
 
 ```Java
-	Parse.initialize(APP_ID, APP_REST_API_ID, CUSTOM_SERVER_PATH);
+	Parse.initialize(APP_ID, APP_REST_API_ID, CUSTOM_SERVER_URL);
 ```
+If you need to connect as root mode (rw access in all tables) you can use initializeAsRoot as follow:
+
+```Java
+	Parse.initializeAsRoot(APP_ID, APP_MASTER_KEY);
+```
+
+Or for custom server: 
+
+```Java
+	Parse.initializeAsRoot(APP_ID, APP_MASTER_KEY, CUSTOM_SERVER_URL);
+```
+
+
 
 You can learn how to migrate your existing applications at [Parse migration](https://parse.com/migration). To learn how to setup  your own Parse Server and Parse Dashboard, check out [Parse github](https://github.com/ParsePlatform). 
 
@@ -34,25 +47,21 @@ You can learn how to migrate your existing applications at [Parse migration](htt
 Getting Started
 ---------------
 
-#### Download the library manually
-
-
-
-#### Maven
+#### Clone this fork and import in your pom.xml:
 
 ```XML
-<project ...>
-    ...
-    <dependencies>
-        <dependency>
-            <groupId>com.github.thiagolocatelli</groupId>
+ <dependencies>
+  		<dependency>
+            <groupId>com.github.giamat86</groupId>
             <artifactId>parse4j</artifactId>
-            <version>1.4</version>
+            <version>1.5-SNAPSHOT</version>
         </dependency>
-    </dependencies>
-    ...
-</project>
+    </dependencies>     
 ```
+
+
+
+
 
 <a name="Objects"></a>
 Objects

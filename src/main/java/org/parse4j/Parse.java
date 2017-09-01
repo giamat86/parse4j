@@ -29,18 +29,21 @@ public class Parse {
 	}
 
 	static public void initialize(String applicationId, String restAPIKey) {
-		mApplicationId = applicationId;
-		mRestAPIKey = restAPIKey;
-		isRootMode = false;
-		bCustomServer = false;
+		initialize(applicationId, restAPIKey, null);
 	}
 
 	static public void initialize(String applicationId, String restAPIKey, String serverPath) {
 		mApplicationId = applicationId;
 		mRestAPIKey = restAPIKey;
 		isRootMode = false;
-		sServerPath = serverPath;
-		bCustomServer = true;
+		
+		if(serverPath != null) {
+			sServerPath = serverPath;
+			bCustomServer = true;
+		}
+		else {
+			bCustomServer = false;
+		}
 	}
 
 	/**
@@ -51,9 +54,7 @@ public class Parse {
 	 * @param masterKey your master key
 	 */
 	static public void initializeAsRoot (String applicationId, String masterKey) {
-		mApplicationId = applicationId;
-		mMasterKey = masterKey;
-		isRootMode = true;
+		initializeAsRoot(applicationId, masterKey, null);
 	}
 	
 	/**
@@ -68,8 +69,13 @@ public class Parse {
 		mApplicationId = applicationId;
 		mMasterKey = masterKey;
 		isRootMode = true;
-		sServerPath = serverPath;
-		bCustomServer = true;
+		if(serverPath != null) {
+			sServerPath = serverPath;
+			bCustomServer = true;
+		}
+		else {
+			bCustomServer = false;
+		}
 	}
 
 	static public String getApplicationId() {
