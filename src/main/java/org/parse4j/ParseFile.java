@@ -9,7 +9,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
 import org.parse4j.callback.GetDataCallback;
 import org.parse4j.callback.ProgressCallback;
@@ -20,7 +20,6 @@ import org.parse4j.util.MimeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("deprecation")
 public class ParseFile {	
 	
 	private static Logger LOGGER = LoggerFactory.getLogger(ParseFile.class);
@@ -137,7 +136,10 @@ public class ParseFile {
 		command.setProgressCallback(progressCallback);
 		command.setData(data);
 		if(getContentType() == null) {
-			String fileExtension = MimeType.getFileExtension(getName());
+			String fileExtension = "";
+			if(getName() != null) {
+				fileExtension = MimeType.getFileExtension(getName());
+			}
 			contentType = MimeType.getMimeType(fileExtension);
 			command.setContentType(contentType);
 		}
@@ -190,7 +192,7 @@ public class ParseFile {
 	public byte[] getData() throws ParseException {
 		
 		HttpGet get = new HttpGet(url);
-		HttpClient client = new DefaultHttpClient();
+		HttpClient client = HttpClientBuilder.create().build();
 		
 		HttpResponse response;
 		try {

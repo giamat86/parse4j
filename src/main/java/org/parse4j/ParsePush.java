@@ -9,11 +9,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.parse4j.command.ParsePostCommand;
 import org.parse4j.command.ParseResponse;
+import org.parse4j.encode.PointerEncodingStrategy;
+import org.parse4j.util.ParseEncoder;
+
 
 public class ParsePush {
 
 	private List<String> channelSet = null;
-	// private ParseQuery<ParseInstallation> query = null;
+	private ParseQuery<ParseInstallation> query = null;
 	private Date expirationTime = null;
 	private Date pushTime = null;
 	private Long expirationTimeInterval = null;
@@ -54,24 +57,24 @@ public class ParsePush {
 		this.pushData.put("alert", message);
 	}
         
-        public void setBadge(String badge) {
-                if(badge == null || badge.length() == 0) {
-                    badge = "Increment";
-                }
-                this.pushData.put("badge", badge);
-        }
-        
-        public void setSound(String sound) {
-                this.pushData.put("sound", sound);
-        }
-        
-        public void setTitle(String title) {
-                this.pushData.put("title", title);
-        }
-        
-        public void setData(String key, String value) {
-                this.pushData.put(key, value);
-        }
+    public void setBadge(String badge) {
+            if(badge == null || badge.length() == 0) {
+                badge = "Increment";
+            }
+            this.pushData.put("badge", badge);
+    }
+    
+    public void setSound(String sound) {
+            this.pushData.put("sound", sound);
+    }
+    
+    public void setTitle(String title) {
+            this.pushData.put("title", title);
+    }
+    
+    public void setData(String key, String value) {
+            this.pushData.put(key, value);
+    }
 	
 	public void send() throws ParseException {
 		ParsePostCommand command = new ParsePostCommand("push");
@@ -100,11 +103,20 @@ public class ParsePush {
 	}
 
 	private JSONObject getJSONData() {
-                JSONObject data = new JSONObject();
-                data.put("data", this.pushData);
+		
+        JSONObject data = new JSONObject();
+        data.put("data", this.pushData);
+        
+        
 
 		if (this.channelSet == null) {
-			data.put("channel", "");
+			if(this.query == null) {
+				data.put("where", new JSONObject());
+	        }
+			else {
+				ParseQuery.QueryConstraints where = query.constraints();
+				data.put("where", ParseEncoder.encode(where, PointerEncodingStrategy.get()));
+			}
 		} else {
 			data.put("channels", new JSONArray(this.channelSet));
 		}
@@ -122,7 +134,10 @@ public class ParsePush {
 		}
 		
 		return data;
-
 	}
 
+	  public void setQuery(ParseQuery<ParseInstallation> query) {
+		    this.query = query;
+		  }
+	
 }

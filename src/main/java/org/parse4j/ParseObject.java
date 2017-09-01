@@ -214,6 +214,7 @@ public class ParseObject {
 		return (String) value;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> List<T> getList(String key) {
 
 		if (!this.data.containsKey(key)) {
@@ -456,6 +457,14 @@ public class ParseObject {
 		dirtyKeys.add(key);
 		isDirty = true;		
 		
+	}
+	
+  /**
+   * Determines whether this object should get a default ACL. Override in subclasses to turn off
+   * default ACLs.
+   */
+	boolean needsDefaultACL() {
+		return true;
 	}
 	
 	public void save() throws ParseException {

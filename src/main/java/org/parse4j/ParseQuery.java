@@ -537,7 +537,6 @@ public class ParseQuery<T extends ParseObject> {
 	}
 
 
-	@SuppressWarnings("unchecked")
 	public List<T> find(JSONObject query) throws ParseException {
 		final String endPoint = retrieveEndpoint();
 		ParseGetCommand command = new ParseGetCommand(endPoint);
@@ -697,6 +696,10 @@ public class ParseQuery<T extends ParseObject> {
 	@SuppressWarnings("serial")
 	static class QueryConstraints extends HashMap<String, Object> { }
 	
+	
+    public QueryConstraints constraints() {
+        return where;
+    }
 
 	public class RelationConstraint {
 		private String key;
@@ -735,6 +738,7 @@ public class ParseQuery<T extends ParseObject> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private T createPojo (JSONObject obj) throws IllegalAccessException, InstantiationException {
 		Class<?> clazz = ParseRegistry.getParseClass(getClassName());
 		if(clazz != null) {
